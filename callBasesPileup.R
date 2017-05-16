@@ -42,9 +42,8 @@ callBasesPileup <- function(plp.fname, min.cov = 7, max.prop.only = 11,
     mutate(
       read.prop = freq / coverage,
       pr.base = pbinom(freq, coverage, pool.prop),
-      freq.good = coverage >= min.cov & read.prop >= prop.thresh,
-      prob.good = coverage >= min.cov &
-                  coverage > max.prop.only &
+      freq.good = coverage >= min.cov & read.prop == 1 | coverage >= max.prop.only & read.prop >= prop.thresh,
+      prob.good = coverage >= max.prop.only &
                   pr.base >= binom.pr.thresh &
                   read.prop >= min.prop
     )
